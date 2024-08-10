@@ -1,10 +1,15 @@
-FROM gradle:8.5.0-jdk21
+FROM eclipse-temurin:21-jdk
 
-WORKDIR /.
+ARG GRADLE_VERSION=8.7
 
-COPY /. .
+RUN apt-get update && apt-get install -yq make unzip
 
-RUN gradle instllDist
+WORKDIR /backend
 
-CMP ./build/install/app/bin/app
+COPY ./ /backend
 
+RUN ./gradlew --no-daemon build
+
+EXPOSE 8080
+
+CMD java -jar build/libs/app-0.0.1-SNAPSHOT.jar
