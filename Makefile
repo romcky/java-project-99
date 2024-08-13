@@ -1,8 +1,9 @@
 build:
 	./gradlew clean build
 
-start:
-	./gradlew run
+start-development:
+	./gradlew bootRun --args='--spring.profiles.active=dev'
+
 
 jacoco:
 	./gradlew jacocoTestReport
