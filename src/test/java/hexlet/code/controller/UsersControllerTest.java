@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -18,6 +19,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @AutoConfigureMockMvc
 public class UsersControllerTest {
     private final String URL = "/api/users";
+    private final String ADMIN = "hexlet@example.com";
     private User testUser;
 
     @Autowired
@@ -26,6 +28,10 @@ public class UsersControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+
+
+
+
     @BeforeEach
     public void beforeEach() {
         testUser = new User();
@@ -33,6 +39,7 @@ public class UsersControllerTest {
         testUser.setLastName("TestLastName");
         testUser.setEmail("test@test.com");
         testUser.setPasswordDigest("qwerty");
+        SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor token = SecurityMockMvcRequestPostProcessors.jwt().jwt(builder -> builder.subject(ADMIN));
         testUser = userRepository.save(testUser);
     }
 
@@ -44,7 +51,7 @@ public class UsersControllerTest {
     @Test
     public void testIndex()
             throws Exception {
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(URL))
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(URL).with(SecurityMockMvcRequestPostProcessors.jwt()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
         String response = result.getResponse().getContentAsString();

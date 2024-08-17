@@ -16,7 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
         unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
 public abstract class UserMapper {
+    @Mapping(target = "passwordDigest", source = "password")
     public abstract User map(UserCreateDTO createDTO);
     public abstract UserDTO map(User model);
+    @InheritConfiguration
     public abstract void update(UserUpdateDTO updateDTO, @MappingTarget User user);
 }
