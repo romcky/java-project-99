@@ -16,24 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
         unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
 public abstract class UserMapper {
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
     public abstract User map(UserCreateDTO createDTO);
-    @BeforeMapping
-    public void encryptPassword(UserCreateDTO createDTO) {
-        String password = createDTO.getPassword();
-        createDTO.setPassword(passwordEncoder.encode(password));
-    }
-
     public abstract UserDTO map(User model);
-    @BeforeMapping
-    public void encryptPassword(UserUpdateDTO updateDTO) {
-        if (updateDTO.getPassword() != null) {
-            String password = updateDTO.getPassword().get();
-            updateDTO.setPassword(JsonNullable.of(passwordEncoder.encode(password)));
-        }
-    }
-
     public abstract void update(UserUpdateDTO updateDTO, @MappingTarget User user);
 }

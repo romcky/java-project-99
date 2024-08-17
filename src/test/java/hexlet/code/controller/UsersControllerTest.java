@@ -32,7 +32,7 @@ public class UsersControllerTest {
         testUser.setFirstName("TestFirstName");
         testUser.setLastName("TestLastName");
         testUser.setEmail("test@test.com");
-        testUser.setPassword("qwerty");
+        testUser.setPasswordDigest("qwerty");
         testUser = userRepository.save(testUser);
     }
 
