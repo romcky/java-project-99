@@ -8,11 +8,15 @@ import lombok.Data;
 
 @Data
 public class UserCreateDTO {
+
     private String firstName;
+
     private String lastName;
+
     @NotBlank
     @Email
     private String email;
+
     @NotBlank
     @Size(min = 3)
     private String password;
