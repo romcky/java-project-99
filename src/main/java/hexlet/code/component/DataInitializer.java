@@ -1,7 +1,9 @@
 package hexlet.code.component;
 
+import hexlet.code.dto.LabelCreateDTO;
 import hexlet.code.dto.TaskStatusCreateDTO;
 import hexlet.code.dto.UserCreateDTO;
+import hexlet.code.service.LabelService;
 import hexlet.code.service.TaskStatusService;
 import hexlet.code.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ public class DataInitializer implements ApplicationRunner {
     private UserService userService;
     @Autowired
     private TaskStatusService taskStatusService;
+    @Autowired
+    private LabelService labelService;
 
     @Override
     public void run(ApplicationArguments args) {
@@ -30,5 +34,9 @@ public class DataInitializer implements ApplicationRunner {
         taskStatusService.create(new TaskStatusCreateDTO("To be fixed", "to_be_fixed"));
         taskStatusService.create(new TaskStatusCreateDTO("To publish", "to_publish"));
         taskStatusService.create(new TaskStatusCreateDTO("Published", "published"));
+
+        labelService.create(new LabelCreateDTO("bug"));
+        labelService.create(new LabelCreateDTO("feature"));
+
     }
 }
