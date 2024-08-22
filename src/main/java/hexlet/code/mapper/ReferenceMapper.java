@@ -1,6 +1,7 @@
 package hexlet.code.mapper;
 
 import hexlet.code.model.BaseEntity;
+import hexlet.code.model.Label;
 import hexlet.code.model.TaskStatus;
 import hexlet.code.repository.LabelRepository;
 import hexlet.code.repository.TaskStatusRepository;
@@ -9,6 +10,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.TargetType;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Mapper(
         componentModel = MappingConstants.ComponentModel.SPRING
@@ -28,5 +32,17 @@ public abstract class ReferenceMapper {
     public TaskStatus toEntity(String slug) {
         TaskStatus status = taskStatusRepository.findBySlug(slug).orElseThrow();
         return slug != null ? status : null;
+    }
+
+    public List<Label> idsToLabels(List<Long> taskLabelIds) {
+        return labelRepository.findByIdIn(taskLabelIds);
+    }
+
+    public List<Long> labelsToIds(List<Label> labels) {
+        List<Long> ids = new ArrayList<>();
+        for (Label label : labels) {
+            ids.add(label.getId());
+        }
+        return ids;
     }
 }

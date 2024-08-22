@@ -3,6 +3,8 @@ package hexlet.code.dto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class TaskCreateDTO {
     @NotBlank
@@ -16,4 +18,6 @@ public class TaskCreateDTO {
     private String status;
 
     private Long assignee_id;
+
+    private List<Long> taskLabelIds;
 }

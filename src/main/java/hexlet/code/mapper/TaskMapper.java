@@ -17,18 +17,21 @@ public abstract class TaskMapper {
     @Mapping(target = "description", source = "content")
     @Mapping(target = "assignee", source = "assignee_id")
     @Mapping(target = "taskStatus", source = "status")
+    @Mapping(target = "labels", source = "taskLabelIds")
     public abstract Task map(TaskCreateDTO createDTO);
 
     @Mapping(target = "title", source = "name")
     @Mapping(target = "content", source = "description")
     @Mapping(target = "assignee_id", source = "assignee.id")
     @Mapping(target = "status", source = "taskStatus.slug")
+    @Mapping(target = "taskLabelIds", source = "labels")
     public abstract TaskDTO map(Task model);
 
     @Mapping(target = "name", source = "title")
     @Mapping(target = "description", source = "content")
     @Mapping(target = "assignee", source = "assignee_id")
     @Mapping(target = "taskStatus", source = "status")
+    @Mapping(target = "labels", source = "taskLabelIds")
     public abstract void update(TaskUpdateDTO updateDTO, @MappingTarget Task model);
 
 
