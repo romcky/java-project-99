@@ -3,12 +3,12 @@ package hexlet.code.service;
 import hexlet.code.dto.TaskStatusCreateDTO;
 import hexlet.code.dto.TaskStatusDTO;
 import hexlet.code.dto.TaskStatusUpdateDTO;
+import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.TaskStatusMapper;
 import hexlet.code.model.TaskStatus;
 import hexlet.code.repository.TaskStatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
 
 import java.util.List;
 
@@ -28,13 +28,13 @@ public class TaskStatusService {
 
     public TaskStatusDTO findById(Long id) {
         TaskStatus status = taskStatusRepository.findById(id).orElseThrow(
-                () -> new ResourceAccessException("Статус с id = " + id + " не найден"));
+                () -> new ResourceNotFoundException("Статус с id = " + id + " не найден"));
         return taskStatusMapper.map(status);
     }
 
     public TaskStatusDTO findBySlug(String slug) {
         TaskStatus status = taskStatusRepository.findBySlug(slug).orElseThrow(
-                () -> new ResourceAccessException("Статус slug = " + slug + " не найден"));
+                () -> new ResourceNotFoundException("Статус slug = " + slug + " не найден"));
         return taskStatusMapper.map(status);
     }
 
@@ -46,7 +46,7 @@ public class TaskStatusService {
 
     public TaskStatusDTO update(TaskStatusUpdateDTO updateDTO, Long id) {
         TaskStatus status = taskStatusRepository.findById(id).orElseThrow(
-                () -> new ResourceAccessException("Статус с id = " + id + " не найден"));
+                () -> new ResourceNotFoundException("Статус с id = " + id + " не найден"));
         taskStatusMapper.update(updateDTO, status);
         taskStatusRepository.save(status);
         return taskStatusMapper.map(status);

@@ -12,7 +12,6 @@ import hexlet.code.specification.TaskSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
 
 import java.util.List;
 
@@ -35,7 +34,13 @@ public class TaskService {
 
     public TaskDTO findById(Long id) {
         Task task = taskRepository.findById(id).orElseThrow(
-                () -> new ResourceAccessException("Задача с id = " + id + " не найдена"));
+                () -> new ResourceNotFoundException("Задача с id = " + id + " не найдена"));
+        return taskMapper.map(task);
+    }
+
+    public TaskDTO findByName(String name) {
+        Task task = taskRepository.findByName(name).orElseThrow(
+                () -> new ResourceNotFoundException("Задача с name = " + name + " не найдена"));
         return taskMapper.map(task);
     }
 
@@ -47,7 +52,7 @@ public class TaskService {
 
     public TaskDTO update(TaskUpdateDTO updateDTO, Long id) {
         Task task = taskRepository.findById(id).orElseThrow(
-                () -> new ResourceAccessException("Задача с id = " + id + " не найдена"));
+                () -> new ResourceNotFoundException("Задача с id = " + id + " не найдена"));
         taskMapper.update(updateDTO, task);
         taskRepository.save(task);
         return taskMapper.map(task);
