@@ -63,6 +63,6 @@ sentry {
 	includeSourceContext = true
 	org = "hexlet-2f"
 	projectName = "java-spring-boot"
-	authToken = System.getenv("SENTRY_AUTH_TOKEN")
+	authToken = "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"
 }
 
