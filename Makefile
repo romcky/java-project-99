@@ -2,10 +2,10 @@ build:
 	./gradlew clean build
 
 start-development:
-	./gradlew bootRun --args='--spring.profiles.active=dev'
+	./gradlew bootRun --args='--spring.profiles.active=development'
 
 start-production:
-	./gradlew bootRun --args='--spring.profiles.active=prod'
+	./gradlew bootRun --args='--spring.profiles.active=production'
 
 
 jacoco:
